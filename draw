@@ -1,0 +1,107 @@
+from tkinter import *
+from PIL import Image, ImageTk
+
+
+root = Tk()
+root.geometry("600x600")
+root.title("Canvas")
+
+start_point = ImageTk.PhotoImage(Image.open("start_point1.png"))
+
+canvas1 = Canvas(root, width="550", height="450", bg="white", highlightbackground="black")
+canvas1.pack()
+
+myimage = canvas1.create_image(50, 50,image= start_point)
+
+entry_color = Entry(root)
+entry_color.insert(0, "black")
+entry_color.place(relx = 0.6, rely = 0.85, anchor=CENTER)
+
+label1 = Label(root, text="Color:")
+label1.place(relx=0.4, rely= 0.85, anchor= CENTER)
+
+
+start_x = 50
+start_y = 50
+
+direction = ""
+
+end_x = 50
+end_y = 50
+
+def drawleft(event):
+    global start_x
+    global start_y
+    global end_x
+    global end_y
+    global direction
+    start_x = end_x
+    start_y = end_y
+    end_x = end_x - 5
+    direction = "Left"
+    print("Drawing Left")
+    draw(start_x, start_y, direction, end_x, end_y)
+
+def drawup(event):
+    global start_x
+    global start_y
+    global end_x
+    global end_y
+    global direction
+    start_x = end_x
+    start_y = end_y
+    end_y = end_y - 5
+    direction = "Up"
+    print("Drawing Up")
+    draw(start_x, start_y, direction, end_x, end_y)
+
+def drawright(event):
+    global start_x
+    global start_y
+    global end_x
+    global end_y
+    global direction
+    start_x = end_x
+    start_y = end_y
+    end_x = end_x + 5
+    direction = "Right"
+    print("Drawing Right")
+    draw(start_x, start_y, direction, end_x, end_y)
+    
+
+def drawdown(event):
+    global start_x
+    global start_y
+    global end_x
+    global end_y
+    global direction
+    start_x = end_x
+    start_y = end_y
+    end_y = end_y + 5
+    direction = "Down"
+    print("Drawing Down")
+    draw(start_x, start_y, direction, end_x, end_y)
+
+    
+def draw(start_x, start_y, direction, end_x, end_y):
+    my_color = entry_color.get()
+    print(my_color)
+    if (direction == "Left"):
+        left_line = canvas1.create_line(start_x, start_y, end_x, end_y, width=2.5, fill = my_color)
+    elif (direction == "Up"):
+        up_line = canvas1.create_line(start_x, start_y, end_x, end_y, width=2.5, fill = my_color)
+    elif (direction == "Right"):
+        right_line = canvas1.create_line(start_x, start_y, end_x, end_y, width=2.5, fill = my_color)
+    else:
+        down_line = canvas1.create_line(start_x, start_y, end_x, end_y, width=2.5, fill = my_color)
+        
+        
+
+root.bind("<Left>", drawleft)
+root.bind("<Up>", drawup)
+root.bind("<Right>", drawright)
+root.bind("<Down>", drawdown)
+
+
+
+root.mainloop()
